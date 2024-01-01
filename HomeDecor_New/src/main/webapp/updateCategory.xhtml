@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        
+        <style>
+            /* Reset some default margin and padding */
+            body, h1, h2, h3, p, div {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f4f4f4;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                margin-top: 50px;
+            }
+
+            h2 {
+                color: #333;
+                margin-bottom: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            label {
+                font-weight: bold;
+                margin-bottom: 5px;
+                display: block;
+            }
+
+            .form-control {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+
+            h:commandButton.btn-primary {
+                background-color: #007bff;
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .button{
+                padding: 5px;
+                border-radius: 2px;
+                cursor: pointer;
+                border: none;
+            }
+        </style>
+        
+    </h:head>
+    <h:body>
+         <f:metadata>
+             <f:viewParam name="categoryid" value="#{adminBean.categoryid}" />
+            <f:event type="preRenderView" listener="#{adminBean.loadItemDetails()}" />
+        </f:metadata>
+        
+        <div class="container">
+            <h2>Update Category</h2>
+            <h:form>
+                <!-- Input fields for updating products -->
+                <div class="form-group">
+                    <label for="productName">Product Name:</label>
+                    <h:inputText id="productName" value="#{adminBean.categoryName}" class="form-control" required="true" />
+                </div>
+                
+                <h:commandButton value="Update Category" action="#{adminBean.updateCategory()}" styleClass="button btn btn-primary" />
+            </h:form>
+        </div>
+        
+        
+    </h:body>
+</html>

@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+     <h:head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" href="./css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>HomeDecor | Register</title>
+  </h:head>
+    <h:body>
+    <div class="d-lg-flex half">
+      <div class="bg order-1 order-md-2" style="background-image: url('./images/bg_1.jpg');"></div>
+      <div class="contents order-2 order-md-1">
+        <div class="container">
+          <div class="row align-items-center justify-content-center">
+            <div class="col-md-7 py-5">
+              <h3>Register</h3>
+              <p class="mb-4">Turn your house into a home with a touch of style and a dash of love.</p>
+              <h:form>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group first">
+                      <h:outputLabel for="fname">Enter Your Name:</h:outputLabel>
+                      <h:inputText rendered="true" id="name" value="#{customerBean.name}" class="form-control" requiredMessage="e.g. John" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group first">
+                      <h:outputLabel for="email">Enter Your Email:</h:outputLabel>
+                      <h:inputText rendered="true" id="email" value="#{customerBean.email}" class="form-control"  required="true"  />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group first">
+                      <h:outputLabel for="password">Enter Your Password:</h:outputLabel>
+                      <h:inputSecret rendered="true" id="password" value="#{customerBean.password}" class="form-control" required="true" />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group first">
+                      <h:outputLabel for="phone">Phone Number:</h:outputLabel>
+                      <h:inputText rendered="true" id="phone" value="#{customerBean.phone}" class="form-control" requiredMessage="+00 0000 000 0000" required="true"/>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group first">
+                      <h:outputLabel for="city">City:</h:outputLabel>
+                      <h:inputText rendered="true" id="city" value="#{customerBean.city}" class="form-control" requiredMessage="e.g. Surat" required="true"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group last mb-3">
+                      <h:outputLabel for="state">State:</h:outputLabel>
+                      <h:inputText rendered="true" id="state" value="#{customerBean.state}" class="form-control" requiredMessage="e.g.Gujarat" required="true"/>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group last mb-3">
+                      <h:outputLabel for="pincode">Pincode:</h:outputLabel>
+                      <h:inputText rendered="true" id="pincode" value="#{customerBean.pincode}" class="form-control" requiredMessage="394210" />
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex mb-5 mt-4 align-items-center">
+                  <h:selectBooleanCheckbox id="agree" styleClass="control control--checkbox mb-0" />
+                  <h:outputLabel for="agree" class="caption">Creating an account means you're okay with our <a href="#">Terms and Conditions</a> and our <a href="#">Privacy Policy</a>.</h:outputLabel>
+                </div>
+                  <h:commandButton value="Register" action="#{customerBean.RegisterCustomer()}" styleClass="btn px-5 btn-primary" />
+              </h:form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./js/jquery-3.3.1.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/main.js"></script>
+  </h:body>
+</html>

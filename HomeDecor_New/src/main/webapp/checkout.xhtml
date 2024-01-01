@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+    </h:head>
+    <h:body>
+        <h3>#{sessionScope.user}</h3>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Checkout - Address</h2>
+
+                    <!-- Display User Addresses -->
+                    <h:form>
+                        <ui:repeat value="#{customerBean.allAddresses}" var="address">
+                            <div class="mb-3 border p-3">
+                                <h:selectBooleanCheckbox id="addressCheckbox" value="#{checkoutBean.addressSelected}" />
+                                <label for="addressCheckbox" class="form-label ml-2">Selected Address: </label>
+                                <p>Name : <strong>#{address.email.username}</strong></p>
+                                <p>Email Address : #{address.email.email}</p>
+                                <p>Phone : #{address.email.phone}</p>
+                                <p>#{address.city}, #{address.state}, <strong>#{address.pincode}</strong></p>
+                            </div>
+                        </ui:repeat>
+                        <h6>If you want to add new Address enter here</h6>
+                        <div class="mb-3">
+                            <label for="city" class="form-label">City:</label>
+                            <h:inputText id="city" class="form-control" value="#{checkoutBean.newAddress.city}" required="true" />
+
+                            <label for="state" class="form-label">State:</label>
+                            <h:inputText id="state" class="form-control" value="#{checkoutBean.newAddress.state}" required="true" />
+
+                            <label for="pincode" class="form-label">Pincode:</label>
+                            <h:inputText id="pincode" class="form-control" value="#{checkoutBean.newAddress.pincode}" required="true" />
+                        </div>
+
+                        <h:commandButton value="Continue to Payment" styleClass="btn btn-primary" action="#{checkoutBean.continueToPayment}" />
+                    </h:form>
+                </div>
+
+                <div class="col-md-6">
+                    <h2>Selected Products</h2>
+                    <!-- Display Selected Products -->
+                    <h:form>
+                        <h:dataTable value="#{customerBean.allProductDetails()}" var="product" class="table">
+                            <h:column>
+                                <f:facet name="header">Product Name</f:facet>
+                                    #{product.detailid}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Rate</f:facet>
+                                    #{product.productName}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Quantity</f:facet>
+                                    #{product.detailid}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Amount</f:facet>
+                                    #{product.detailid}
+                            </h:column>
+                        </h:dataTable>
+                        
+                        <h:dataTable value="#{customerBean.AllOrderMaster()}" var="ordermaster" class="table">
+                            <h:column>
+                                <f:facet name="header">Product Name</f:facet>
+                                    #{ordermaster.totalamount}
+                            </h:column>
+                        </h:dataTable>
+
+                        <h:commandButton value="Continue to Payment" styleClass="btn btn-primary" action="#{checkoutBean.continueToPayment}" />
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Include Bootstrap JS (Replace with your Bootstrap path or use CDN) -->
+        <script src="js/jquery.min.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"
+        ></script>
+    </h:body>
+</html>

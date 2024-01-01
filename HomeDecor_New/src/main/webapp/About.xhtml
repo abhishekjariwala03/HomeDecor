@@ -1,0 +1,620 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>HomeDecor|AboutUs</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+            crossorigin="anonymous"
+            />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+            />
+        <link rel="stylesheet" type="text/css" href="css/vendor.css" />
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" name="crossorigin" />
+        <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&amp;display=swap" rel="stylesheet" />
+
+        <!-- script
+      ================================================== -->
+        <script src="js/modernizr.js"></script>
+
+    </h:head>
+    <h:body>
+        <header id="header" class="site-header fixed-top border-bottom">
+            <div class="container-lg">
+                <div class="row">
+                    <nav class="navbar navbar-expand-lg">
+                        <button
+                            class="navbar-toggler d-flex d-lg-none order-3 p-2 border-0 shadow-none"
+                            type="button"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#bdNavbar"
+                            aria-controls="bdNavbar"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation"
+                            >
+                            <svg class="navbar-icon svg-white" width="40" height="40">
+                                <use href="#navbar-icon"></use>
+                            </svg>
+                        </button>
+                        <a
+                            href="#"
+                            class="navbar-brand order-2 order-lg-2 d-flex d-lg-none"
+                            >
+                            <img src="images/HomeDecor.png" alt="Logo" />
+                        </a>
+                        <div
+                            class="offcanvas offcanvas-end order-3"
+                            tabindex="-1"
+                            id="bdNavbar"
+                            aria-labelledby="bdNavbarOffcanvasLabel"
+                            >
+                            <div class="offcanvas-body">
+                                <div class="offcanvas-header px-4 pb-0">
+                                    <button
+                                        type="button"
+                                        class="btn-close btn-close-black"
+                                        data-bs-dismiss="offcanvas"
+                                        aria-label="Close"
+                                        data-bs-target="#bdNavbar"
+                                        ></button>
+                                </div>
+                                <div class="navbar-collapse order-1 order-lg-1" id="navbarMenu">
+                                    <ul class="navbar-nav mr-auto">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light me-4" href="Home.jsf"> Home </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light me-4" href="About.jsf">
+                                                About
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <!-- Add a dropdown here for categories -->
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link text-light me-4 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Categories
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                    <ui:repeat value="#{adminBean.allCategories}" var="cat">
+                                                        <a class="dropdown-item" onclick="redirectToDetail('#{cat.categoryid}')">#{cat.categoryname}</a>
+                                                    </ui:repeat>
+                                                </div>
+                                            </li>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light me-4" href="Products.jsf">
+                                                Products
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a
+                                                class="nav-link text-light me-4"
+                                                href="Productdetail.jsf"
+                                                >
+                                                Product Detail
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <a
+                                    href="#"
+                                    class="navbar-brand order-2 order-lg-2 d-none d-lg-flex"
+                                    >
+                                    <img src="images/website.png" alt="Logo" />
+                                </a>
+                                <ul
+                                    class="user-items list-unstyled d-none d-lg-flex justify-content-end align-items-center order-3 flex-grow-1 gap-5 m-0"
+                                    >
+                                    <li>
+                                        <li class="nav-item dropdown">
+                                            <a style="color: white" class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                #{empty sessionScope.user ? 'Login' : sessionScope.user}
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="userDropdown">
+                                                <h:form rendered="#{not empty sessionScope.user}">
+                                                    <!-- Display user email or other user information -->
+                                                    <h:outputText value="Logged in as: #{sessionScope.user}" styleClass="dropdown-item" />
+                                                    <h:commandLink value="Logout" action="#{customerBean.logout()}" styleClass="dropdown-item" />
+                                                </h:form>
+                                                <h:form rendered="#{empty sessionScope.user}">
+                                                    <!-- Display login link for logged-out users -->
+                                                    <a href="./Login.jsf" class="dropdown-item">Login</a>
+                                                    <a href="./Register.jsf" class="dropdown-item">Register</a>
+                                                </h:form>
+                                            </div>
+                                        </li>
+
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="cart.html"
+                                            class="text-light"
+                                            data-bs-toggle="offcanvas"
+                                            data-bs-target="#offcanvasCart"
+                                            aria-controls="offcanvasCart"
+                                            >
+                                            <svg class="cart svg-white" width="18" height="18">
+                                                <use href="add.jsf"></use>
+                                            </svg>
+                                            <span><a style="color: white" href="add.jsf">Cart (0)</a></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <svg class="search svg-white" width="18" height="18">
+                                            <use href="#search"></use>
+                                        </svg>
+                                        <input
+                                            type="text"
+                                            placeholder="Search..."
+                                            class="border-0 bg-transparent fst-italic outline-none text-light"
+                                            />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+
+
+
+
+        <section class="hero-section position-relative jarallax">
+<!--            <img src="images/luxury-home-decor.jpg" alt="tea cup" class="jarallax-img"/>-->
+<img
+                style="filter: brightness(0.5) !important"
+                src="images/luxury-home-decor.jpg"
+                class="jarallax-img"
+                alt="product_logo_img"
+                />
+            <div class="hero-content position-absolute d-flex justify-content-center align-items-center text-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="page-title text-light fst-italic">About Us</h1>
+                            <div class="breadcrumbs text-light">
+                                <span class="item">
+                                    <a href="Home.jsf" class="text-light">Home / </a>
+                                </span>
+                                <span class="item">About Us</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="about" class="py-lg-8">
+            <div class="container-lg">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <figure class="image-holder mb-5 jarallax">
+                            <img src="images/single-image1.jpg" alt="tea" class="jarallax-img" />
+                        </figure>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="detail-entry px-4">
+                            <h4 class="fs-6">HOUSE OF TEA</h4>
+                            <h3 class="mt-0 mb-4 fs-2 fst-italic">"Our main motive is to make our beautiful people stay fit &amp; healthy everytime."</h3>
+                            <p>A pellentesque pretium feugiat vel morbi sagittis lorem habitasse cursus. Suspendisse tempus rhoncus enim pellentesque est in neque, elit mattis vehicula vitae eget. Viverra imperdiet felis sollicitudin tesque cursus sit.</p>
+                            <p>Suspendisse tempus rhoncus enim pellentesque est vehicula vitae eget. Viverra imperdiet felis sollicitudin pellentesque cursus sit. Feugiat hac porttitor.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="icon-box-wrap">
+            <div class="container-lg">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="icon-box">
+                            <div class="icon-box-content">
+                                <h3 class="feature-title">100% Organic</h3>
+                                <p>Suspendisse tempus rhoncus enim pellentesque est vehicula vitae eget.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="icon-box">
+                            <div class="icon-box-content">
+                                <h3 class="feature-title">Always Fresh</h3>
+                                <p>Suspendisse tempus rhoncus enim pellentesque est vehicula vitae eget.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="icon-box">
+                            <div class="icon-box-content">
+                                <h3 class="feature-title">High Quality</h3>
+                                <p>Suspendisse tempus rhoncus enim pellentesque est vehicula vitae eget.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="icon-box">
+                            <div class="icon-box-content">
+                                <h3 class="feature-title">Our Plantations</h3>
+                                <p>Suspendisse tempus rhoncus enim pellentesque est vehicula vitae eget.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="our-team" class="py-lg-8">
+            <div class="container-lg">
+                <div class="row">
+                    <div class="display-header text-center mb-5">
+                        <h2 class="display-6 fst-italic m-0">Our Team</h2>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-5">
+                        <div class="team-member text-center">
+                            <div class="image-holder position-relative">
+                                <img src="images/team-member1.jpg" alt="team" class="img-fluid"/>
+                                <ul class="social-links list-unstyled position-absolute">
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="facebook" width="25" height="20" aria-hidden="true">
+                                                <use href="#facebook"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="twitter" width="25" height="20" aria-hidden="true">
+                                                <use href="#twitter"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="instagram" width="25" height="20" aria-hidden="true">
+                                                <use href="#instagram"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="youtube" width="25" height="20" aria-hidden="true">
+                                                <use href="#youtube"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="member-details text-center">
+                                <h3 class="member-title fst-italic mb-0">Isabella Moore</h3>
+                                <div class="designation">CEO-Founder</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-5">
+                        <div class="team-member text-center">
+                            <div class="image-holder position-relative">
+                                <img src="images/team-member2.jpg" alt="team" class="img-fluid"/>
+                                <ul class="social-links list-unstyled position-absolute">
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="facebook" width="25" height="20" aria-hidden="true">
+                                                <use href="#facebook"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="twitter" width="25" height="20" aria-hidden="true">
+                                                <use href="#twitter"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="instagram" width="25" height="20" aria-hidden="true">
+                                                <use href="#instagram"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="youtube" width="25" height="20" aria-hidden="true">
+                                                <use href="#youtube"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="member-details text-center">
+                                <h3 class="member-title fst-italic mb-0">Harold Morgan</h3>
+                                <div class="designation">General Manager</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-5">
+                        <div class="team-member text-center">
+                            <div class="image-holder position-relative">
+                                <img src="images/team-member3.jpg" alt="team" class="img-fluid"/>
+                                <ul class="social-links list-unstyled position-absolute">
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="facebook" width="25" height="20" aria-hidden="true">
+                                                <use href="#facebook"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="twitter" width="25" height="20" aria-hidden="true">
+                                                <use href="#twitter"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="instagram" width="25" height="20" aria-hidden="true">
+                                                <use href="#instagram"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="youtube" width="25" height="20" aria-hidden="true">
+                                                <use href="#youtube"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="member-details text-center">
+                                <h3 class="member-title fst-italic mb-0">Alexis Spencer</h3>
+                                <div class="designation">Asst Manager</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-5">
+                        <div class="team-member text-center">
+                            <div class="image-holder position-relative">
+                                <img src="images/team-member4.jpg" alt="team" class="img-fluid"/>
+                                <ul class="social-links list-unstyled position-absolute">
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="facebook" width="25" height="20" aria-hidden="true">
+                                                <use href="#facebook"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="twitter" width="25" height="20" aria-hidden="true">
+                                                <use href="#twitter"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="instagram" width="25" height="20" aria-hidden="true">
+                                                <use href="#instagram"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-dark">
+                                            <svg class="youtube" width="25" height="20" aria-hidden="true">
+                                                <use href="#youtube"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="member-details text-center">
+                                <h3 class="member-title fst-italic mb-0">Josephine Lavoie</h3>
+                                <div class="designation">Staff</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="call-to-action" class="py-lg-6">
+            <div class="container-lg">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-lg-7">
+                        <blockquote class="fs-1">Each tea purchase comes with organically and ethically grown loose theleaf tea, carefully blended to create the perfect cup. </blockquote>
+                    </div>
+                    <div class="col-lg-4">
+                        <a href="Product.jsf" class="btn btn-lg btn-primary">Know More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="instagram-wrap" class="py-lg-6">
+            <div class="container-lg">
+                <div class="row">
+                    <h2 class="display-6 text-center fst-italic">Shop Our Insta</h2>
+                    <div class="col-lg-2 col-md-6 mb-3">
+                        <div class="image-holder position-relative">
+                            <a href="https://www.instagram.com/templatesjungle/" target="_blank">
+                                <img src="images/insta-item1.jpg" alt="instagram" class="img-fluid"/>
+                                <div class="border insta-item position-absolute d-flex align-items-center justify-content-center">
+                                    <svg class="insta svg-white" width="25" height="25">
+                                        <use href="#insta"></use>
+                                    </svg>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 mb-3">
+                        <div class="image-holder position-relative">
+                            <a href="https://www.instagram.com/templatesjungle/" target="_blank">
+                                <img src="images/insta-item2.jpg" alt="instagram" class="img-fluid"/>
+                                <div class="border insta-item position-absolute d-flex align-items-center justify-content-center">
+                                    <svg class="insta svg-white" width="25" height="25">
+                                        <use href="#insta"></use>
+                                    </svg>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 mb-3">
+                        <div class="image-holder position-relative">
+                            <a href="https://www.instagram.com/templatesjungle/" target="_blank">
+                                <img src="images/insta-item3.jpg" alt="instagram" class="img-fluid"/>
+                                <div class="border insta-item position-absolute d-flex align-items-center justify-content-center">
+                                    <svg class="insta svg-white" width="25" height="25">
+                                        <use href="#insta"></use>
+                                    </svg>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 mb-3">
+                        <div class="image-holder position-relative">
+                            <a href="https://www.instagram.com/templatesjungle/" target="_blank">
+                                <img src="images/insta-item4.jpg" alt="instagram" class="img-fluid"/>
+                                <div class="border insta-item position-absolute d-flex align-items-center justify-content-center">
+                                    <svg class="insta svg-white" width="25" height="25">
+                                        <use href="#insta"></use>
+                                    </svg>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 mb-3">
+                        <div class="image-holder position-relative">
+                            <a href="https://www.instagram.com/templatesjungle/" target="_blank">
+                                <img src="images/insta-item5.jpg" alt="instagram" class="img-fluid"/>
+                                <div class="border insta-item position-absolute d-flex align-items-center justify-content-center">
+                                    <svg class="insta svg-white" width="25" height="25">
+                                        <use href="#insta"></use>
+                                    </svg>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 mb-3">
+                        <div class="image-holder position-relative">
+                            <a href="https://www.instagram.com/templatesjungle/" target="_blank">
+                                <img src="images/insta-item6.jpg" alt="instagram" class="img-fluid"/>
+                                <div class="border insta-item position-absolute d-flex align-items-center justify-content-center">
+                                    <svg class="insta svg-white" width="25" height="25">
+                                        <use href="#insta"></use>
+                                    </svg>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer id="footer" class="mt-5">
+            <div class="container-lg">
+                <div class="row justify-content-between py-5">
+                    <!-- Quick Links -->
+                    <div class="col-lg-3 col-md-6 mb-5">
+                        <div class="footer-menu">
+                            <h5 class="widget-title fst-italic">Quick Links</h5>
+                            <ul class="menu-list list-unstyled">
+                                <li class="menu-item fw-medium pb-2">
+                                    <a href="Home.jsf" class="item-anchor">Home</a>
+                                </li>
+                                <li class="menu-item fw-medium pb-2">
+                                    <a href="About.jsf" class="item-anchor">About</a>
+                                </li>
+                                <li class="menu-item fw-medium pb-2">
+                                    <a href="Products.jsf" class="item-anchor">Products</a>
+                                </li>
+                                <li class="menu-item fw-medium pb-2">
+                                    <a href="Productdetail.jsf" class="item-anchor">ProductDetails</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Rest of your footer content remains unchanged -->
+                    <div class="col-lg-6 col-md-12 mb-5" style="margin-left:-150px;">
+                        <div class="footer-menu">
+                            <h5 class="widget-title fst-italic">Home Decoration and Interior</h5>
+                            <p>
+                                Enhance your living space with our expert tips and ideas on home decoration and interior design. Create a cozy and stylish ambiance that reflects your personality.
+                            </p>
+                            <!-- Add relevant images, links, or more information -->
+                        </div>
+                    </div>
+                    <!-- Contact Form -->
+                    <div class="col-lg-3 col-md-6 mb-5" >
+                        <div class="footer-menu">
+                            <div class="footer-intro mb-2">
+                                <h4 class="fs-2 fst-italic pb-2">Contact Us</h4>
+                                <!--<form id="form1" class="mt-4 position-relative">-->
+                                <h:form class="mt-4 position-relative">
+                                    <!--                                            <input
+                                                                                    type="text"
+                                                                                    name="name"
+                                                                                    placeholder="Your Name"
+                                                                                    class="border-0 border-bottom bg-transparent w-100"
+                                                                                    />-->
+                                    <h:inputText class="border-0 border-bottom bg-transparent w-100" />
+                                    <h:inputText class="border-0 border-bottom bg-transparent w-100" requiredMessage="Enter your email" value="#{customerBean.email}"/>
+
+                                    <h:inputTextarea class="border-0 border-bottom bg-transparent w-100" value="#{customerBean.query}" requiredMessage="Enter your query:" />
+
+                                    <!--<a href="#" class="btn btn-lg btn-light" style=" padding: 10px 20px; border-radius: 5px; cursor: pointer;">Send</a>-->
+                                    <h:commandButton action="#{customerBean.addQuery()}" value="Send" class="btn btn-lg btn-light" style=" padding: 10px 20px; border-radius: 5px; cursor: pointer;" />
+                                </h:form>
+                                <!--</form>-->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Rest of your footer content remains unchanged -->
+                </div>
+            </div>
+
+
+            <div class="border-top py-4">
+                <div class="container-lg">
+                    <div class="row justify-content-between">
+                        <div class="col-md-10">
+                            <p>
+                                ©2023 HomeDecor And Interior
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="#" class="d-flex">
+                                <svg
+                                    class="arrow-up svg-primary position-absolute"
+                                    width="20"
+                                    height="20"
+                                    >
+                                    <use href="#arrow-up"></use>
+                                </svg>
+                                <span class="ps-4">Back to top</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+
+        <script src="js/jquery.min.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/script.js"></script>
+    </h:body>
+</html>

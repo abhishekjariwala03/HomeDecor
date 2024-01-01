@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <title>Admin Panel</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+        <style>
+            /* Your custom CSS styles */
+            body {
+                padding-top: 50px;
+                font-family: Arial, sans-serif;
+            }
+            .container {
+                max-width: 800px;
+            }
+            /* Add more styles as needed */
+        </style>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <a class="navbar-brand" href="#">Admin Panel</a>
+        </nav>
+
+        <div class="container mt-4">
+            <h1>Product Management</h1>
+
+            <h:form  enctype="multipart/form-data">
+                <!-- Form fields for adding products -->
+                <div class="form-group">
+                    <label for="productName">Product Name:</label>
+                    <h:inputText id="productName" value="#{adminBean.productName}" class="form-control" required="true" />
+                </div>
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <h:inputText id="price" value="#{adminBean.price}" class="form-control" required="true" />
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity:</label>
+                    <h:inputText id="quantity" value="#{adminBean.quantity}" class="form-control" required="true" />
+                </div>
+                <div class="form-group">
+                    <label for="tax">Tax:</label>
+                    <h:inputText id="tax" value="#{adminBean.tax}" class="form-control" required="true" />
+                </div>
+                <div class="form-group">
+                    <label for="gst">GST:</label>
+                    <h:inputText id="gst" value="#{adminBean.gst}" class="form-control" required="true" />
+                </div>
+                <div class="form-group">
+                    <label for="gst">Category:</label>
+                    <h:selectOneMenu id="categoryId" value="#{adminBean.categoryid}" class="form-control">
+                        <f:selectItems value="#{adminBean.getAllCategories()}" var="cat" itemLabel="#{cat.categoryname}" itemValue="#{cat.categoryid}" />
+                    </h:selectOneMenu>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <h:inputTextarea id="description" value="#{adminBean.description}" rows="4" cols="50" class="form-control" required="true" />
+                </div>
+                <div class="form-group">
+                    <label for="image">Image:</label>
+                    <h:inputFile value="#{adminBean.file}" />
+                </div>
+
+                <!-- Submit button -->
+                <h:commandButton value="Add Product" action="#{adminBean.addProduct()}" styleClass="btn px-5 btn-primary" />
+
+            </h:form>
+
+            <!-- Display section for existing products -->
+
+            <div class="mt-4">
+                <h2>Product List</h2>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Tax</th>
+                            <th>GST</th>
+                            <th>Category ID</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <!-- Add more table headers for other product details if needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <h:dataTable value="#{adminBean.allproducts}" var="product">
+                            <h:column>
+                                <f:facet name="header">No.</f:facet>
+                                    #{rowIndex + 1}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Product id</f:facet>
+                                    #{product.productid}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Product Name</f:facet>
+                                    #{product.productname}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Price</f:facet>
+                                    #{product.price}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Quantity</f:facet>
+                                    #{product.quntity}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Tax</f:facet>
+                                    #{product.tax}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Gst</f:facet>
+                                    #{product.gst}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Discription</f:facet>
+                                    #{product.description}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Image</f:facet>
+                                <h:graphicImage style="height: 60px" value="/ProductImages/#{product.image}" alt="Product Image" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Actions</f:facet>
+                                <h:form>
+                                    <a  onclick="redirectToDetail('#{product.productid}')" class="text-dark myFont">Edit</a>
+                                    <h:commandButton value="Delete" action="#{adminBean.deleteProduct(product.productid)}" styleClass="delete-btn" immediate="true"/>
+                                </h:form>
+                            </h:column>
+                        </h:dataTable>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <script>
+            function redirectToDetail(pid) {
+                window.location.href = 'updateProduct.jsf?productid=' + pid;
+            }
+        </script>
+    </h:body>
+</html>

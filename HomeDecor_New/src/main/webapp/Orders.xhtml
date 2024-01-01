@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <div class="container mt-5">
+                <h1>Order Form</h1>
+
+                <h:dataTable value="#{adminBean.viewOrders()}" var="order">
+                    <h:column>
+                        <f:facet name="header">No.</f:facet>
+                            #{rowIndex + 1}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Product id</f:facet>
+                            #{order.orderid}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Product Name</f:facet>
+                            #{order.orderdate}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Price</f:facet>
+                            #{order.gst}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Quantity</f:facet>
+                            #{order.tax}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Status</f:facet>
+                        <!-- Dropdown for order status -->
+                        <div class="form-group">
+                            <h:selectOneMenu value="#{order.status}" onchange="updateOrderStatus(this.value, #{order.orderid})">
+                                <f:selectItem itemLabel="Pending" itemValue="Pending" />
+                                <f:selectItem itemLabel="Ready To Ship" itemValue="Ready To Ship" />
+                                <f:selectItem itemLabel="Delivered" itemValue="Delivered" />
+                            </h:selectOneMenu>
+                        </div>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Actions</f:facet>
+                        <h:form>
+                            <h:commandButton value="Update" action="#{adminBean.updateOrderStatus(order.status, order.orderid)}" styleClass="update-btn" />
+                            <h:commandButton value="Delete" action="#{adminBean.deleteProduct(product.productid)}" styleClass="delete-btn" immediate="true"/>
+                        </h:form>
+                    </h:column>
+                </h:dataTable>
+            </div>
+        </h:form>
+
+        <!-- Bootstrap JS and Popper.js -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </h:body>
+</html>

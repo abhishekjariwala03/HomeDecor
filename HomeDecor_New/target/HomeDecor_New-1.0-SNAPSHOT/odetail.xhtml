@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"  />
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 50px auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+
+            .table th, .table td {
+                vertical-align: middle;
+            }
+
+            .table th {
+                background-color: #007bff;
+                color: #fff;
+            }
+
+            .table th, .table td, .table button {
+                border: none;
+            }
+
+            .table button {
+                cursor: pointer;
+                padding: 5px 10px;
+                margin-right: 5px;
+                border-radius: 5px;
+            }
+
+            .btn-primary {
+                background-color: #007bff;
+                color: #fff;
+            }
+
+            .btn-danger {
+                background-color: #dc3545;
+                color: #fff;
+            }
+
+            .btn-primary:hover, .btn-danger:hover {
+                filter: brightness(90%);
+            }
+
+        </style>
+    </h:head>
+    <h:body>
+
+        <div class="container">
+            <h1>Order Details</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Email</th>
+                        <th>Order Date</th>
+                        <th>Status</th>
+                        <th>Tax</th>
+                        <th>GST</th>
+                        <th>Total Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="orderTableBody">
+                    <h:dataTable value="#{adminBean.viewOrders()}" var="order">
+                        #{order.orderdate}
+                    </h:dataTable>
+                </tbody>
+            </table>
+        </div>
+
+        <script src="scripts.js"></script>
+
+
+
+        <!-- Bootstrap JS and dependencies (jQuery) -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- Your custom JavaScript -->
+
+
+
+    </h:body>
+</html>

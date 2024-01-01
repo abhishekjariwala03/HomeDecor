@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        
+        <style>
+            
+            body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 20px;
+}
+
+/* Style the form container */
+h\\:form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Style the form header */
+h3 {
+    color: #007bff;
+}
+
+/* Style the table */
+table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Style form labels */
+label {
+    font-weight: bold;
+    color: #343a40;
+}
+
+/* Style input fields and textareas */
+input[type="text"],
+input[type="file"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0;
+    box-sizing: border-box;
+}
+
+/* Style select dropdown */
+select {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0;
+    box-sizing: border-box;
+}
+
+/* Style the Add Product button */
+h\\:commandButton {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Style the Add Product button on hover */
+h\\:commandButton:hover {
+    background-color: #218838;
+}
+
+/* Add some spacing to the form */
+td {
+    padding: 10px;
+}
+
+/* Style the form error messages */
+.message {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+}
+            
+        </style>
+    </h:head>
+    <h:body>
+        <h:form id="productForm" enctype="multipart/form-data">
+            <!-- Add Product Section -->
+            <h3>Add Product</h3>
+            <table>
+                <tr>
+                    <td><label for="productName">Product Name:</label></td>
+                    <td><h:inputText id="productName" value="#{adminBean.productName}" class="form-control" required="true" /></td>
+                </tr>
+                <tr>
+                    <td><label for="price">Price:</label></td>
+                    <td><h:inputText id="price" value="#{adminBean.price}" class="form-control" required="true" /></td>
+                </tr>
+                <tr>
+                    <td><label for="quantity">Quantity:</label></td>
+                    <td><h:inputText id="quantity" value="#{adminBean.quantity}" class="form-control" required="true" /></td>
+                </tr>
+                <tr>
+                    <td><label for="tax">Tax:</label></td>
+                    <td><h:inputText id="tax" value="#{adminBean.tax}" class="form-control" required="true" /></td>
+                </tr>
+                <tr>
+                    <td><label for="gst">GST:</label></td>
+                    <td><h:inputText id="gst" value="#{adminBean.gst}" class="form-control" required="true" /></td>
+                </tr>
+                <tr>
+                    <td><label for="categoryId">Category:</label></td>
+                    <td>
+                        <h:selectOneMenu id="categoryId" value="#{adminBean.categoryid}" class="form-control">
+                            <f:selectItems value="#{adminBean.getAllCategories()}" var="cat" itemLabel="#{cat.categoryname}" itemValue="#{cat.categoryid}" />
+                        </h:selectOneMenu>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="description">Description:</label></td>
+                    <td><h:inputTextarea id="description" value="#{adminBean.description}" rows="4" cols="50" class="form-control" required="true" /></td>
+                </tr>
+                <tr>
+                    <td><label for="image">Image:</label></td>
+                    <td><h:inputFile value="#{adminBean.file}" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><h:commandButton value="Add Product" action="#{adminBean.addProduct()}" styleClass="btn px-5 btn-primary" /></td>
+                </tr>
+            </table>
+        </h:form>
+    </h:body>
+</html>

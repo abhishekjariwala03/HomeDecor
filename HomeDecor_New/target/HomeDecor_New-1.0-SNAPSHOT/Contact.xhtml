@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+    </h:head>
+    <h:body>
+        <div class="container mt-5">
+            <h3>User Data</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Query</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Assuming you have a list of User objects in your managed bean -->
+                    <ui:repeat value="#{adminBean.allContactus()}" var="contact">
+                        <tr>
+                            <td>#{contact.email}</td>
+                            <td>#{contact.query}</td>
+                        </tr>
+                    </ui:repeat>
+                </tbody>
+            </table>
+        </div>
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </h:body>
+</html>
